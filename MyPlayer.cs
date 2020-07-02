@@ -104,18 +104,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         }
         // It creates a variable names input
         Vector2 input = Vector2.zero;
-        // enableMobileInputs is true
-        if (enableMobileInputs)
-        {
-            // It sets the joystick values to input variable
-            input = new Vector2(joystick.input.x, joystick.input.y);
-        }
-        // enableMobileInputs is false
-        else
-        {
-            // It sets the GetAzisRaw values to input variable
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
+        // It checks if the player is using a phone or a pc 
+        input = Myinputs(input);
         // It creates a variable names inputDir
         Vector2 inputDir = input.normalized;
         // inputDir is not zero, it makes sure that the character rotation follows the camera rotation if it's moving
@@ -312,5 +302,23 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It calls the LeaveRoom method
             GameManager.instance.LeaveRoom();
         }
+    }
+
+    // It checks if the player is using a phone or a pc
+    Vector2 Myinputs(Vector2 input)
+    {
+        // enableMobileInputs is true
+        if (enableMobileInputs)
+        {
+            // It sets the joystick values to input variable
+            input = new Vector2(joystick.input.x, joystick.input.y);
+        }
+        // enableMobileInputs is false
+        else
+        {
+            // It sets the GetAzisRaw values to input variable
+            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        }
+        return input;
     }
 }
