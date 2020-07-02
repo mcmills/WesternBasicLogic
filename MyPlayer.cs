@@ -85,6 +85,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         
     }
 
+
     void Update()
     {
         // If this is my character
@@ -94,6 +95,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             LocalPlayerUpdate();
         }
     }
+
 
     void LocalPlayerUpdate()
     {
@@ -108,26 +110,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         input = Myinputs(input);
         // It creates a variable names inputDir
         Vector2 inputDir = input.normalized;
-        // inputDir is not zero, it makes sure that the character rotation follows the camera rotation if it's moving
-        if (inputDir != Vector2.zero)
-        {
-            // It makes the character rotate with the camera
-            float rotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
-            // It smooths the character rotation
-            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, rotation, ref currentVeclocity, smoothRotationTime);
-            // The runSound is not playing
-            if (!runSound.isPlaying)
-            {
-                // It plays the runSound
-                runSound.Play();
-            }
-        }
-        // inputDir is zero
-        else
-        {
-            // It stops the runSound
-            runSound.Stop();
-        }
+        // It rotates the player with the camera
+        RotateWCamera(inputDir);
         // It is firing
         if (fire)
         {
@@ -160,6 +144,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
         }
     }
+
+
     // It plays the MuzzleFlash
     public void MuzzleFlash()
     {
@@ -177,6 +163,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             PositionCrossHair();
         }
     }
+
+
     // It positions the Cross Hair
     void PositionCrossHair()
     {
@@ -197,6 +185,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             crossHairPrefab.transform.LookAt(cameraTransform);
         }
     }
+
 
     // It is call when the player wants to fire
     public void Fire()
@@ -224,6 +213,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // The MuzzleFlash method starts
         MuzzleFlash();
     }
+
+
     // It is call when the character stops firing 
     public void FireUp()
     {
@@ -232,6 +223,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // It stops tje muzzle
         muzzle.Stop();
     }
+
+
     // It is call when the player wants to Jump
     public void Jump()
     {
@@ -246,6 +239,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // It adds Force to the character up
         rb.AddForce(Vector3.up * JumpForce, ForceMode.Impulse);
     }
+
 
     // This method is call remotely when the character gets hurt
     [PunRPC]
@@ -266,6 +260,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             }
         }
     }
+
+
     // This method synchronized variables that constantly change
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -293,6 +289,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         }
     }
 
+
     // The player dies
     void Die()
     {
@@ -303,6 +300,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             GameManager.instance.LeaveRoom();
         }
     }
+
 
     // It checks if the player is using a phone or a pc
     Vector2 Myinputs(Vector2 input)
@@ -320,5 +318,31 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         }
         return input;
+    }
+
+
+    // It rotates the player with the camera
+    void RotateWCamera(Vector2 inputDirRWC)
+    {
+        // inputDir is not zero, it makes sure that the character rotation follows the camera rotation if it's moving
+        if (inputDirRWC != Vector2.zero)
+        {
+            // It makes the character rotate with the camera
+            float rotation = Mathf.Atan2(inputDirRWC.x, inputDirRWC.y) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            // It smooths the character rotation
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, rotation, ref currentVeclocity, smoothRotationTime);
+            // The runSound is not playing
+            if (!runSound.isPlaying)
+            {
+                // It plays the runSound
+                runSound.Play();
+            }
+        }
+        // inputDir is zero
+        else
+        {
+            // It stops the runSound
+            runSound.Stop();
+        }
     }
 }
