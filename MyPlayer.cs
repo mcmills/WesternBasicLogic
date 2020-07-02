@@ -11,13 +11,23 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public float smoothRotationTime = 0.25f;
     public bool enableMobileInputs = false;
     public float JumpForce;
-    GameObject crossHairPrefab;
-    FixedJoystick joystick;
-    public Transform rayOrigin;
+    public bool fire;
+
 
     //Sound
     public AudioSource shootSound;
     public AudioSource runSound;
+
+
+    GameObject crossHairPrefab;
+    FixedJoystick joystick;
+    ParticleSystem muzzle;
+    Animator anim;
+    Transform cameraTransform;
+
+
+    public Transform rayOrigin;
+
 
     //Health
     public GameObject healthBar;
@@ -25,17 +35,10 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public float playerHealth = 1f;
     public float damage = 0.01f;
 
-    ParticleSystem muzzle;
+
     float currentSpeed;
     float speedVelocity;
     float currentVeclocity;
-    //Vector3 crossHairVel;
-    public bool fire;
-
-    Transform cameraTransform;
-
-
-    Animator anim;
 
 
     private void Awake()
@@ -54,7 +57,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         }
         // It finds an object named GunMuzzle in other object names SciFiRifle(Clone) and It gets the PartucleSystem component
         muzzle = rayOrigin.Find("SciFiRifle(Clone)/GunMuzzle").GetComponent<ParticleSystem>();
-
     }
 
 
@@ -81,8 +83,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         {
             // It disables the BetterJump component
             GetComponent<BetterJump>().enabled = false;
-        }
-        
+        } 
     }
 
 
@@ -138,7 +139,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     // It plays the MuzzleFlash
     public void MuzzleFlash()
     {
-       
         muzzle.Play();
     }
 
