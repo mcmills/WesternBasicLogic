@@ -124,19 +124,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         float tragetSpeed = MoveSpeed * inputDir.magnitude;
         // It smooths the speed
         currentSpeed = Mathf.SmoothDamp(currentSpeed, tragetSpeed, ref speedVelocity, 0.1f);
-
-        // The inputDir magnitude is greater than 0
-        if (inputDir.magnitude > 0f)
-        {
-            // It sets the Running animation to true
-            anim.SetBool("Running", true);
-        }
-        // The inputDir magnitude is equal than 0
-        else if (inputDir.magnitude == 0f)
-        {
-            // It sets the Running animation to false
-            anim.SetBool("Running", false);
-        }
+        // It controls the Running Animation
+        RunningAnim(inputDir);
         // It is not firing
         if (!fire)
         {
@@ -343,6 +332,24 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         {
             // It stops the runSound
             runSound.Stop();
+        }
+    }
+
+
+    // It controls the Running Animation
+    void RunningAnim(Vector2 inputDirRuAni)
+    {
+        // The inputDir magnitude is greater than 0
+        if (inputDirRuAni.magnitude > 0f)
+        {
+            // It sets the Running animation to true
+            anim.SetBool("Running", true);
+        }
+        // The inputDir magnitude is equal than 0
+        else if (inputDirRuAni.magnitude == 0f)
+        {
+            // It sets the Running animation to false
+            anim.SetBool("Running", false);
         }
     }
 }
