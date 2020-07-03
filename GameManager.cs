@@ -4,15 +4,18 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public Camera sceneCam;
+    //public Camera sceneCam;
     public GameObject player;
     public Transform playerSpawnPosition;
     public Text pingrateText;
 
     public static GameManager instance;
+
+    public CinemachineFreeLook myFreeLook;
 
     private void Awake()
     {
@@ -35,15 +38,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         PhotonNetwork.SerializationRate = 15; //10
 
         // It disabls the Scene Camera
-        sceneCam.enabled = false;
+        //sceneCam.enabled = false;
         // It instantiates a player 
         PhotonNetwork.Instantiate(player.name, playerSpawnPosition.position, playerSpawnPosition.rotation);
+
     }
 
     private void Update()
     {
         // It displays the Ping
         pingrateText.text = PhotonNetwork.GetPing().ToString();
+
+        CheckingTheCamera();
     }
 
     // It is call when the player left the Room
@@ -59,5 +65,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // It makes the playe leave the Room
         PhotonNetwork.LeaveRoom();
+    }
+
+    void CheckingTheCamera()
+    {
+        myFreeLook.Follow = GameObject.Find("Player(Clone)/CameraTarget").GetComponent<Transform>();
+        myFreeLook.LookAt = GameObject.Find("Player(Clone)/CameraTarget").GetComponent<Transform>();
     }
 }
