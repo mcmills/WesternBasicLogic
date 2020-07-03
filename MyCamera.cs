@@ -42,7 +42,9 @@ public class MyCamera : MonoBehaviour
             // It sets this object false if this isn't my player
             this.gameObject.SetActive(false);
         }
-        
+        // It sets the offset to 1.5f as default
+        offset = 1.5f;
+
     }
 
     private void Start()
