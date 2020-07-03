@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     public static GameManager instance;
 
-    public CinemachineFreeLook myFreeLook;
-
     private void Awake()
     {
         // This will make sure that there is just one Game Manager
@@ -36,9 +34,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         // It optimizes the connection
         PhotonNetwork.SendRate = 25; //20
         PhotonNetwork.SerializationRate = 15; //10
-
-        // It disabls the Scene Camera
-        //sceneCam.enabled = false;
         // It instantiates a player 
         PhotonNetwork.Instantiate(player.name, playerSpawnPosition.position, playerSpawnPosition.rotation);
 
@@ -48,8 +43,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // It displays the Ping
         pingrateText.text = PhotonNetwork.GetPing().ToString();
-
-        CheckingTheCamera();
     }
 
     // It is call when the player left the Room
@@ -65,11 +58,5 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         // It makes the playe leave the Room
         PhotonNetwork.LeaveRoom();
-    }
-
-    void CheckingTheCamera()
-    {
-        myFreeLook.Follow = GameObject.Find("Player(Clone)/CameraTarget").GetComponent<Transform>();
-        myFreeLook.LookAt = GameObject.Find("Player(Clone)/CameraTarget").GetComponent<Transform>();
     }
 }
