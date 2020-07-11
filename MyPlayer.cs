@@ -65,10 +65,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             fire = false;
             // It gets the Animator component from this object
             anim = GetComponent<Animator>();
-            // It finds an object named FireBtn, it gets the FireBtnScript component and it sets it to this object
-            GameObject.Find("FireBtn").GetComponent<FireBtnScript>().SetPlayer(this);
-            // It finds an object named JumpBtn, it gets the FixedButton component and it sets it to this object
-            GameObject.Find("JumpBtn").GetComponent<FixedButton>().SetPlayer(this);
             // It instantiates a crossHairPrefab --
             crossHairPrefab = Instantiate(crossHairPrefab);
             // It makes the healthBar visible
