@@ -131,6 +131,12 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It calls the Fire method
             Fire();
         }
+        // It checks if the player release the Right Click
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            // It calls the FireUp method
+            FireUp();
+        }
     }
 
 
