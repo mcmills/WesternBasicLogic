@@ -9,7 +9,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
 {
     public float MoveSpeed = 3f;
     public float smoothRotationTime = 0.25f;
-    public bool enableMobileInputs = false;
     public float JumpForce;
     public bool fire;
 
@@ -20,7 +19,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
 
 
     GameObject crossHairPrefab;
-    FixedJoystick joystick;
     ParticleSystem muzzle;
     Animator anim;
     Transform cameraTransform;
@@ -48,8 +46,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // If this is my player
         if (photonView.IsMine)
         {
-            // It finds an object named Fixed Joystick and it get a component named FixedJoystick
-            joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
             // It loads the CrosshairCanvas from the Resources folder as a Game Object
             crossHairPrefab = Resources.Load("CrosshairCanvas") as GameObject;
             // It finds an object named MainCamera
@@ -294,18 +290,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     // It checks if the player is using a phone or a pc
     Vector2 Myinputs(Vector2 input)
     {
-        // enableMobileInputs is true
-        if (enableMobileInputs)
-        {
-            // It sets the joystick values to input variable
-            input = new Vector2(joystick.input.x, joystick.input.y);
-        }
-        // enableMobileInputs is false
-        else
-        {
-            // It sets the GetAzisRaw values to input variable
-            input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        }
+        // It sets the GetAzisRaw values to input variable
+        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         return input;
     }
 
