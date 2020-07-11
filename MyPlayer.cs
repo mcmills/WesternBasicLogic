@@ -67,7 +67,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         {
             // It sets the fire bool to false
             fire = false;
-            // It gets the Animator conponent from this object
+            // It gets the Animator component from this object
             anim = GetComponent<Animator>();
             // It finds an object named FireBtn, it gets the FireBtnScript component and it sets it to this object
             GameObject.Find("FireBtn").GetComponent<FireBtnScript>().SetPlayer(this);
