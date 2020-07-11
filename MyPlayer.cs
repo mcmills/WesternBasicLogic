@@ -129,6 +129,12 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It moves the character
             transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
         }
+        // It checks if the player press the Right Click
+        if (Input.GetButtonDown("Fire1"))
+        {
+            // It calls the Fire method
+            Fire();
+        }
     }
 
 
