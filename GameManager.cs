@@ -4,10 +4,11 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class GameManager : MonoBehaviourPunCallbacks
 {
-    public Camera sceneCam;
+    //public Camera sceneCam;
     public GameObject player;
     public Transform playerSpawnPosition;
     public Text pingrateText;
@@ -33,11 +34,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // It optimizes the connection
         PhotonNetwork.SendRate = 25; //20
         PhotonNetwork.SerializationRate = 15; //10
-
-        // It disabls the Scene Camera
-        sceneCam.enabled = false;
         // It instantiates a player 
         PhotonNetwork.Instantiate(player.name, playerSpawnPosition.position, playerSpawnPosition.rotation);
+
     }
 
     private void Update()

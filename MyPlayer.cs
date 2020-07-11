@@ -53,7 +53,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It loads the CrosshairCanvas from the Resources folder as a Game Object
             crossHairPrefab = Resources.Load("CrosshairCanvas") as GameObject;
             // It finds an object named MainCamera
-            cameraTransform = GameObject.Find("MainCamera").transform;
+            cameraTransform = GameObject.Find("ThirdPersonCamera").transform;
         }
         // It finds an object named GunMuzzle in other object names SciFiRifle(Clone) and It gets the PartucleSystem component
         muzzle = rayOrigin.Find("SciFiRifle(Clone)/GunMuzzle").GetComponent<ParticleSystem>();
@@ -67,7 +67,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         {
             // It sets the fire bool to false
             fire = false;
-            // It gets the Animator conponent from this object
+            // It gets the Animator component from this object
             anim = GetComponent<Animator>();
             // It finds an object named FireBtn, it gets the FireBtnScript component and it sets it to this object
             GameObject.Find("FireBtn").GetComponent<FireBtnScript>().SetPlayer(this);
