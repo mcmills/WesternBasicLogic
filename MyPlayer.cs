@@ -130,17 +130,30 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     void FireManager()
     {
         // It checks if the player press the Left Click
-        if (Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire1"))
         {
+            if (Input.GetButtonDown("Fire1"))
+            {
+                // It calls the Fire method
+                Fire();
+            }
+            fire = true;
             // It enables the crossHair
             crossHair.SetActive(true);
         }
         // It checks if the player release the Left Click
-        else if (Input.GetButtonUp("Fire2"))
+        else if (Input.GetButtonUp("Fire2") || Input.GetButtonUp("Fire1"))
         {
-            // It disables the crossHair
-            crossHair.SetActive(false);
+            fire = false;
+            // It calls the FireUp method
+            FireUp();
+            if (Input.GetButtonUp("Fire2"))
+            {
+                // It disables the crossHair
+                crossHair.SetActive(false);
+            }
         }
+        /*
         // It checks if the player press the Right Click
         if (Input.GetButtonDown("Fire1"))
         {
@@ -153,7 +166,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It calls the FireUp method
             FireUp();
         }
-
+        */
     }
 
 
@@ -168,7 +181,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public void Fire()
     {
         // Set the fire bool to true
-        fire = true;
+        //fire = true;
         // Start the Fire animation
         anim.SetTrigger("Fire");
         // Structure used to get information back from a raycast
@@ -196,7 +209,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public void FireUp()
     {
         // It sets fire bool to false
-        fire = false;
+        //fire = false;
         // It stops tje muzzle
         muzzle.Stop();
     }
