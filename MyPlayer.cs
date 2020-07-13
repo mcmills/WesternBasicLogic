@@ -11,6 +11,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public float smoothRotationTime = 0.25f;
     public float JumpForce;
     public bool fire;
+    bool crossHairStatus;
 
 
     //Sound
@@ -56,6 +57,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
 
     private void Start()
     {
+        crossHairStatus = false;
         // It disables the crossHair
         crossHair.SetActive(false);
         // If this is my character
@@ -104,7 +106,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // It rotates the player with the camera
         RotateWCamera(inputDir);
         // It is firing
-        if (fire)
+        if (crossHairStatus)
         {
             // It makes the character rotate with the camera 
             float rotation = Mathf.Atan2(inputDir.x, inputDir.y) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
@@ -136,10 +138,15 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             {
                 // It calls the Fire method
                 Fire();
+                fire = true;
             }
-            fire = true;
-            // It enables the crossHair
-            crossHair.SetActive(true);
+            else if (Input.GetButtonDown("Fire2"))
+            {
+                // It enables the crossHair
+                crossHair.SetActive(true);
+                crossHairStatus = true;
+            }
+            
         }
         // It checks if the player release the Left Click
         else if (Input.GetButtonUp("Fire2") || Input.GetButtonUp("Fire1"))
@@ -151,6 +158,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             {
                 // It disables the crossHair
                 crossHair.SetActive(false);
+                crossHairStatus = false;
             }
         }
         /*
