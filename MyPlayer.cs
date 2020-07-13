@@ -18,7 +18,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public AudioSource runSound;
 
 
-    GameObject crossHairPrefab;
     ParticleSystem muzzle;
     Animator anim;
     Transform cameraTransform;
@@ -46,8 +45,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
         // If this is my player
         if (photonView.IsMine)
         {
-            // It loads the CrosshairCanvas from the Resources folder as a Game Object
-            crossHairPrefab = Resources.Load("CrosshairCanvas") as GameObject;
             // It finds an object named MainCamera
             cameraTransform = GameObject.Find("ThirdPersonCamera").transform;
         }
@@ -65,8 +62,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             fire = false;
             // It gets the Animator component from this object
             anim = GetComponent<Animator>();
-            // It instantiates a crossHairPrefab --
-            crossHairPrefab = Instantiate(crossHairPrefab);
             // It makes the healthBar visible
             healthBar.SetActive(true);
         }
@@ -144,39 +139,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public void MuzzleFlash()
     {
         muzzle.Play();
-    }
-
-
-    private void LateUpdate()
-    {
-        // If this is my character
-        if (photonView.IsMine)
-        {
-            // It calls the PositionCrossHair method
-            PositionCrossHair();
-        }
-    }
-
-
-    // It positions the Cross Hair
-    void PositionCrossHair()
-    {
-        // Structure used to get information back from a raycast
-        RaycastHit hit;
-        // The ray cames from the camera
-        Ray ray = cameraTransform.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        // The ray just interacts with objects in the Default layer 
-        int layer_mask = LayerMask.GetMask("Default");
-        // It creates a ray
-        if(Physics.Raycast(ray, out hit, 100f, layer_mask))
-        {
-            // It sets the start position from the ray
-            Vector3 start = cameraTransform.GetComponent<Camera>().ViewportToWorldPoint(new Vector3(0.5f, 0.5f));
-            // The Cross Hair follows the ray position
-            crossHairPrefab.transform.position = ray.GetPoint(10);
-            // It makes the Cross Hair look  the camera always
-            crossHairPrefab.transform.LookAt(cameraTransform);
-        }
     }
 
 
