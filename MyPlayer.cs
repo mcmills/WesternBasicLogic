@@ -28,6 +28,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
 
     //Health
     public GameObject healthBar;
+    public GameObject crossHair;
     public Image fillImage;
     public float playerHealth = 1f;
     public float damage = 0.01f;
@@ -55,6 +56,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
 
     private void Start()
     {
+        // It disables the crossHair
+        crossHair.SetActive(false);
         // If this is my character
         if (photonView.IsMine)
         {
@@ -120,6 +123,24 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It moves the character
             transform.Translate(transform.forward * currentSpeed * Time.deltaTime, Space.World);
         }
+        // It controls the Fire States
+        FireManager();
+    }
+
+    void FireManager()
+    {
+        // It checks if the player press the Left Click
+        if (Input.GetButtonDown("Fire2"))
+        {
+            // It enables the crossHair
+            crossHair.SetActive(true);
+        }
+        // It checks if the player release the Left Click
+        else if (Input.GetButtonUp("Fire2"))
+        {
+            // It disables the crossHair
+            crossHair.SetActive(false);
+        }
         // It checks if the player press the Right Click
         if (Input.GetButtonDown("Fire1"))
         {
@@ -132,6 +153,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It calls the FireUp method
             FireUp();
         }
+
     }
 
 
