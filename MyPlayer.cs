@@ -11,6 +11,7 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     public float smoothRotationTime = 0.25f;
     public float JumpForce;
     public bool fire;
+    public float waitCrossHair = 3f;
     bool crossHairStatus;
 
 
@@ -174,6 +175,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     // It is call when the player wants to fire
     public void Fire()
     {
+        // It start the TimerCrossHair coroutine
+        StartCoroutine(TimerCrossHair());
         // Start the Fire animation
         anim.SetTrigger("Fire");
         // Structure used to get information back from a raycast
@@ -332,5 +335,14 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             // It sets the Running animation to false
             anim.SetBool("Running", false);
         }
+    }
+    // It makes the CrossHair enable for few seconds
+    private IEnumerator TimerCrossHair()
+    {
+        crossHairStatus = true;
+        crossHair.SetActive(crossHairStatus);
+        yield return new WaitForSeconds(waitCrossHair);
+        crossHairStatus = false;
+        crossHair.SetActive(crossHairStatus);
     }
 }
