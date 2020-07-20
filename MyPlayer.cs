@@ -143,8 +143,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             else if (Input.GetButtonDown("Fire2"))
             {
                 // It enables the crossHair
-                crossHair.SetActive(true);
                 crossHairStatus = true;
+                crossHair.SetActive(crossHairStatus);
             }
             
         }
@@ -157,8 +157,8 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
             if (Input.GetButtonUp("Fire2"))
             {
                 // It disables the crossHair
-                crossHair.SetActive(false);
                 crossHairStatus = false;
+                crossHair.SetActive(crossHairStatus);
             }
         }
     }
