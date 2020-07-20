@@ -161,20 +161,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
                 crossHairStatus = false;
             }
         }
-        /*
-        // It checks if the player press the Right Click
-        if (Input.GetButtonDown("Fire1"))
-        {
-            // It calls the Fire method
-            Fire();
-        }
-        // It checks if the player release the Right Click
-        else if (Input.GetButtonUp("Fire1"))
-        {
-            // It calls the FireUp method
-            FireUp();
-        }
-        */
     }
 
 
@@ -188,8 +174,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     // It is call when the player wants to fire
     public void Fire()
     {
-        // Set the fire bool to true
-        //fire = true;
         // Start the Fire animation
         anim.SetTrigger("Fire");
         // Structure used to get information back from a raycast
@@ -216,8 +200,6 @@ public class MyPlayer : MonoBehaviourPun, IPunObservable
     // It is call when the character stops firing 
     public void FireUp()
     {
-        // It sets fire bool to false
-        //fire = false;
         // It stops tje muzzle
         muzzle.Stop();
     }
